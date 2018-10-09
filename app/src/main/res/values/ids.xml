@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bottom_bar_divider" type="id" />
+    <item name="bottom_bar_layout" type="id" />
+    <item name="frame_layout" type="id" />
+    <item name="view_pager" type="id" />
+    <item name="text_view" type="id" />
+    <item name="match_versus" type="id" />
+    <item name="match_home_score" type="id" />
+    <item name="match_away_score" type="id" />
+    <item name="away_badge" type="id" />
+    <item name="home_badge" type="id" />
+    <item name="match_goals" type="id" />
+    <item name="match_shots" type="id" />
+    <item name="match_goalkeeper" type="id" />
+    <item name="match_defender" type="id" />
+    <item name="match_midfielder" type="id" />
+    <item name="match_forward" type="id" />
+    <item name="match_substitute" type="id" />
+    <item name="league_spinner" type="id" />
+    <item name="list_team" type="id" />
+    <item name="last_match" type="id" />
+    <item name="next_match" type="id" />
+    <item name="favorites" type="id" />
+
+    <item name="team_badge" type="id" />
+    <item name="team_name" type="id" />
+    <item name="position" type="id" />
+    <item name="name" type="id" />
+    <item name="avatar" type="id" />
+</resources>
