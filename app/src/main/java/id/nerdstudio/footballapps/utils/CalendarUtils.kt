@@ -12,6 +12,37 @@ import android.widget.Toast
 import id.nerdstudio.footballapps.matches.data.Match
 import java.util.*
 
+fun addMatchReminder(context: Activity?, calendar: Calendar, match: Match){
+    val title = "${match.homeTeam} vs ${match.awayTeam}"
+    val description = "Match between $title"
+    addMatchReminder(context, calendar, title, description)
+}
+
+fun addMatchReminder(context: Activity?, calendar: Calendar, title: String, description: String){
+    context?.run {
+        val intent = Intent(Intent.ACTION_EDIT)
+        intent.type = "vnd.android.cursor.item/event"
+        intent.putExtra(CalendarContract.Events.TITLE, title)
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, description)
+        intent.putExtra(CalendarContract.CalendarAlerts.ALARM_TIME, calendar.timeInMillis)
+        startActivity(intent)
+    }
+}
+
+fun createEvent(calendar: Calendar, title: String, description: String) : ContentValues{
+    /** Inserting an event in calendar.  */
+    val event = ContentValues()
+    event.put(CalendarContract.Events.CALENDAR_ID, 3)
+    event.put(CalendarContract.Events.TITLE, title)
+    event.put(CalendarContract.Events.DESCRIPTION, description)
+    event.put(CalendarContract.Events.ALL_DAY, 0)
+    event.put(CalendarContract.Events.DTSTART, calendar.timeInMillis)
+    event.put(CalendarContract.Events.DTEND, calendar.timeInMillis + 120 * 60 * 1000)
+    event.put(CalendarContract.Events.EVENT_TIMEZONE, CalendarContract.Calendars.CALENDAR_TIME_ZONE)
+    event.put(CalendarContract.Events.HAS_ALARM, 1)
+    return event
+}
+
 fun addReminderInCalendar(calendar: Calendar, context: Activity?, match: Match) {
     context?.run {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED &&
@@ -23,16 +54,7 @@ fun addReminderInCalendar(calendar: Calendar, context: Activity?, match: Match) 
             val cr = contentResolver
             val title = "${match.homeTeam} vs ${match.awayTeam}"
             val description = "Match between $title"
-            /** Inserting an event in calendar.  */
-            val event = ContentValues()
-            event.put(CalendarContract.Events.CALENDAR_ID, 3)
-            event.put(CalendarContract.Events.TITLE, title)
-            event.put(CalendarContract.Events.DESCRIPTION, description)
-            event.put(CalendarContract.Events.ALL_DAY, 0)
-            event.put(CalendarContract.Events.DTSTART, calendar.timeInMillis)
-            event.put(CalendarContract.Events.DTEND, calendar.timeInMillis + 120 * 60 * 1000)
-            event.put(CalendarContract.Events.EVENT_TIMEZONE, CalendarContract.Calendars.CALENDAR_TIME_ZONE)
-            event.put(CalendarContract.Events.HAS_ALARM, 1)
+            val event = createEvent(calendar, title, description)
             val eventUri = cr.insert(CalendarContract.Events.CONTENT_URI, event)
 
             /** Adding reminder for event added.  */
