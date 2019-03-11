@@ -1,2 +1,4 @@
 linters:
-  kotlin: { android : true }
+  kotlin: { android: true }
+fixers:
+  enable: false
